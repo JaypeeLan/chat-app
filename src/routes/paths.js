@@ -12,3 +12,6 @@ export const PATH_DASHBOARD = {
     app: path(ROOTS_DASHBOARD, "app"),
   },
 };
+
+// path_dashboard.general.app
+// e.g: url/:id
