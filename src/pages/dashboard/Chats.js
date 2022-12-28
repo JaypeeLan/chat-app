@@ -10,7 +10,6 @@ import {
   Divider,
   Button,
 } from "@mui/material";
-import SimpleBar from "simplebar-react";
 import { SimpleBarStyle } from "../../components/Scrollbar";
 import { ChatList } from "../../data";
 import { faker } from "@faker-js/faker";
