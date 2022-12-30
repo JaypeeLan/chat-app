@@ -33,7 +33,6 @@ const Message = () => {
                   // ordinary text
                   return <TextMsg chat={chat} />;
               }
-              break;
             default:
               return <></>;
           }
