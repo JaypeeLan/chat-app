@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Divider,
   Stack,
@@ -6,9 +6,15 @@ import {
   Box,
   Link,
   IconButton,
+  Menu,
+  MenuItem,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { DownloadSimple, Image } from "phosphor-react";
+import { DotsThreeVertical, DownloadSimple, Image } from "phosphor-react";
+
+// ---------------------------
+import { Message_options } from "../../data/index";
+// -----------------------------------------
 
 const DocMsg = ({ chat }) => {
   const theme = useTheme();
@@ -41,15 +47,17 @@ const DocMsg = ({ chat }) => {
               <DownloadSimple />
             </IconButton>
           </Stack>
-          <Typography variant="body2"
+          <Typography
+            variant="body2"
             sx={{
-              backgroundColor: chat.incoming ?  theme.palette.text : "#fff" 
+              backgroundColor: chat.incoming ? theme.palette.text : "#fff",
             }}
           >
             {chat.message}
           </Typography>
         </Stack>
       </Box>
+      <MessageOptions />
     </Stack>
   );
 };
@@ -102,6 +110,7 @@ const LinkMsg = ({ chat }) => {
           </Stack>
         </Stack>
       </Box>
+      <MessageOptions />
     </Stack>
   );
 };
@@ -144,6 +153,7 @@ const ReplyMsg = ({ chat }) => {
           </Typography>
         </Stack>
       </Box>
+      <MessageOptions />
     </Stack>
   );
 };
@@ -178,6 +188,7 @@ const MediaMsg = ({ chat }) => {
           </Typography>
         </Stack>
       </Box>
+      <MessageOptions />
     </Stack>
   );
 };
@@ -203,6 +214,8 @@ const TextMsg = ({ chat }) => {
           {chat.message}
         </Typography>
       </Box>
+      {/* vertical icon */}
+      <MessageOptions />
     </Stack>
   );
 };
@@ -221,6 +234,44 @@ const TimeLine = ({ chat }) => {
       </Typography>
       <Divider width="46%" />
     </Stack>
+  );
+};
+
+const MessageOptions = () => {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const open = Boolean(anchorEl);
+  return (
+    <>
+      <DotsThreeVertical
+        size={20}
+        id="basic-button"
+        aria-controls={open ? "basic-menu" : undefined}
+        aria-haspopup="true"
+        aria-expanded={open ? "true" : undefined}
+        onClick={handleClick}
+      />
+      <Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          "aria-labelledby": "basic-button",
+        }}
+      >
+        <Stack spacing={1} px={1}>
+          {Message_options.map((elem) => (
+            <MenuItem onClick={handleClick}>{elem.title}</MenuItem>
+          ))}
+        </Stack>
+      </Menu>
+    </>
   );
 };
 

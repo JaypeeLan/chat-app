@@ -4,8 +4,19 @@ import {
   InputAdornment,
   Stack,
   TextField,
+  Fab,
+  Tooltip,
 } from "@mui/material";
-import { Camera, File, Image, LinkSimple, PaperPlaneTilt, Smiley, Sticker, User } from "phosphor-react";
+import {
+  Camera,
+  File,
+  Image,
+  LinkSimple,
+  PaperPlaneTilt,
+  Smiley,
+  Sticker,
+  User,
+} from "phosphor-react";
 import { useTheme, styled } from "@mui/material/styles";
 import React, { useState } from "react";
 // import { useSearchParams } from "react-router-dom";
@@ -25,6 +36,7 @@ const StyledInput = styled(TextField)(({ theme }) => ({
 }));
 // ------------------------------
 const ChatInput = ({ setOpenPicker }) => {
+  const [openActions, setOpenActions] = useState(false);
   return (
     <StyledInput
       fullWidth
@@ -33,11 +45,39 @@ const ChatInput = ({ setOpenPicker }) => {
       InputProps={{
         disableUnderline: true,
         startAdornment: (
-          <InputAdornment>
-            <IconButton>
-              <LinkSimple />
-            </IconButton>
-          </InputAdornment>
+          <Stack sx={{ width: "max-content" }}>
+            <Stack
+              sx={{
+                position: "relative",
+                display: openActions ? "inline-block" : "none",
+              }}
+            >
+              {Actions.map((el) => (
+                <Tooltip placement="right" title={el.title}>
+                  <Fab
+                    sx={{
+                      position: "absolute",
+                      top: -el.y,
+                      backgroundColor: el.color,
+                    }}
+                    aria-label="add"
+                  >
+                    {el.icon}
+                  </Fab>
+                </Tooltip>
+              ))}
+            </Stack>
+
+            <InputAdornment>
+              <IconButton
+                onClick={() => {
+                  setOpenActions(!openActions);
+                }}
+              >
+                <LinkSimple />
+              </IconButton>
+            </InputAdornment>
+          </Stack>
         ),
         endAdornment: (
           <InputAdornment>
