@@ -15,6 +15,9 @@ import {
 import { useTheme } from "@mui/material/styles";
 import { CaretDown, MagnifyingGlass, Phone, VideoCamera } from "phosphor-react";
 import { faker } from "@faker-js/faker";
+import { dispatch } from "../../redux/store";
+import { ToggleSidebar } from "../../redux/slices/app";
+import { useDispatch } from "react-redux";
 // import { useSearchParams } from "react-router-dom";
 // import useResponsive from "../../hooks/useResponsive";
 
@@ -64,6 +67,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 
 const ChatHeader = () => {
   const theme = useTheme();
+  const dispatch = useDispatch();
   // const isMobile = useResponsive("between", "md", "xs", "sm");
   // const [searchParams, setSearchParams] = useSearchParams();
 
@@ -97,7 +101,13 @@ const ChatHeader = () => {
         sx={{ width: "100%", height: "100%" }}
       >
         {/* ---------------------------------- */}
-        <Stack direction={"row"} spacing={2}>
+        <Stack
+          onClick={() => {
+            dispatch(ToggleSidebar());
+          }}
+          direction={"row"}
+          spacing={2}
+        >
           <Box>
             <StyledBadge
               overlap="circular"
