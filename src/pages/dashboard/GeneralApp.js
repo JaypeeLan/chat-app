@@ -4,6 +4,8 @@ import Chats from "./Chats";
 import Conversation from "../../components/conversation/Conversation";
 import Contact from "../../components/Contact";
 import { useSelector } from "react-redux";
+import SharedMessages from "../../components/SharedMessages";
+import StarredMessages from "../../components/StarredMessages";
 
 const GeneralApp = () => {
   const theme = useTheme();
@@ -11,7 +13,7 @@ const GeneralApp = () => {
   return (
     <Stack direction={"row"} sx={{ width: "100%" }}>
       <Chats />
-      {/* subtract total width from sidebar and chats and contact section width */}
+
       <Box
         sx={{
           height: "100%",
@@ -25,7 +27,19 @@ const GeneralApp = () => {
         <Conversation />
       </Box>
       {/* ----- Contact ------- */}
-      {sidebar.open && <Contact />}
+      {sidebar.open &&
+        (() => {
+          switch (sidebar.type) {
+            case "CONTACT":
+              return <Contact />;
+            case "STARRED":
+              return <StarredMessages />;
+            case "SHARED":
+              return <SharedMessages />;
+            default:
+              break;
+          }
+        })()}
     </Stack>
   );
 };

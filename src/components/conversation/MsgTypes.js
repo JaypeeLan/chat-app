@@ -16,7 +16,7 @@ import { DotsThreeVertical, DownloadSimple, Image } from "phosphor-react";
 import { Message_options } from "../../data/index";
 // -----------------------------------------
 
-const DocMsg = ({ chat }) => {
+const DocMsg = ({ chat, menu }) => {
   const theme = useTheme();
   return (
     <Stack direction={"row"} justifyContent={chat.incoming ? "start" : "end"}>
@@ -57,12 +57,13 @@ const DocMsg = ({ chat }) => {
           </Typography>
         </Stack>
       </Box>
-      <MessageOptions />
+      {menu && <MessageOptions />}
     </Stack>
   );
 };
 
-const LinkMsg = ({ chat }) => {
+//
+const LinkMsg = ({ chat, menu }) => {
   const theme = useTheme();
   return (
     <Stack direction={"row"} justifyContent={chat.incoming ? "start" : "end"}>
@@ -110,12 +111,13 @@ const LinkMsg = ({ chat }) => {
           </Stack>
         </Stack>
       </Box>
-      <MessageOptions />
+      {menu && <MessageOptions />}
     </Stack>
   );
 };
 
-const ReplyMsg = ({ chat }) => {
+// ------------
+const ReplyMsg = ({ chat, menu }) => {
   const theme = useTheme();
   return (
     <Stack direction={"row"} justifyContent={chat.incoming ? "start" : "end"}>
@@ -153,14 +155,14 @@ const ReplyMsg = ({ chat }) => {
           </Typography>
         </Stack>
       </Box>
-      <MessageOptions />
+      {menu && <MessageOptions />}
     </Stack>
   );
 };
 
 // -------------------------------------------------
 
-const MediaMsg = ({ chat }) => {
+const MediaMsg = ({ chat, menu }) => {
   const theme = useTheme();
   return (
     <Stack direction={"row"} justifyContent={chat.incoming ? "start" : "end"}>
@@ -188,12 +190,12 @@ const MediaMsg = ({ chat }) => {
           </Typography>
         </Stack>
       </Box>
-      <MessageOptions />
+      {menu && <MessageOptions />}
     </Stack>
   );
 };
 
-const TextMsg = ({ chat }) => {
+const TextMsg = ({ chat, menu }) => {
   const theme = useTheme();
   return (
     <Stack direction={"row"} justifyContent={chat.incoming ? "start" : "end"}>
@@ -215,7 +217,7 @@ const TextMsg = ({ chat }) => {
         </Typography>
       </Box>
       {/* vertical icon */}
-      <MessageOptions />
+      {menu && <MessageOptions />}
     </Stack>
   );
 };
