@@ -30,17 +30,20 @@ import { ToggleSidebar, updateSidebarType } from "../redux/slices/app";
 import { faker } from "@faker-js/faker";
 import AntSwitch from "./AntSwitch";
 
-const Transition = forwardRef(function Transition(props, ref) {
+const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
 const BlockDialog = ({ open, handleClose }) => {
   <Dialog
-    open={open}
+    fullWidth
+    maxWidth="md"
     TransitionComponent={Transition}
     keepMounted
+    open={open}
     onClose={handleClose}
-    aria-describedby="alert-dialog-slide-description"
+    aria-labelledby="alert-dialog-title"
+    aria-describedby="alert-dialog-description"
   >
     <DialogTitle>{"Block this contact"}</DialogTitle>
     <DialogContent>
@@ -56,11 +59,14 @@ const BlockDialog = ({ open, handleClose }) => {
 };
 const DeleteDialog = ({ open, handleClose }) => {
   <Dialog
-    open={open}
+    fullWidth
+    maxWidth="md"
     TransitionComponent={Transition}
     keepMounted
+    open={open}
     onClose={handleClose}
-    aria-describedby="alert-dialog-slide-description"
+    aria-labelledby="alert-dialog-title"
+    aria-describedby="alert-dialog-description"
   >
     <DialogTitle>{"Delete this chat"}</DialogTitle>
     <DialogContent>
@@ -270,9 +276,7 @@ const Contact = () => {
           </Stack>
         </Stack>
       </Stack>
-      {openBlock && (
-        <BlockDialog open={openBlock} handleClose={handleCloseBlock} />
-      )}
+      {openBlock && <BlockDialog open={true} handleClose={handleCloseBlock} />}
       {openDelete && (
         <DeleteDialog open={openBlock} handleClose={handleCloseDelete} />
       )}

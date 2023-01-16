@@ -25,7 +25,8 @@ export default function Router() {
       children: [
         { element: <Navigate to={DEFAULT_PATH} replace />, index: true },
         { path: "app", element: <GeneralApp /> },
-        
+        { path: "settings", element: <Settings /> },
+
         // fall back 404 page
         { path: "404", element: <Page404 /> },
         { path: "*", element: <Navigate to="/404" replace /> },
@@ -37,6 +38,8 @@ export default function Router() {
 
 // props for H.O.C (lazy load)
 const GeneralApp = Loadable(
-  lazy(() => import("../pages/dashboard/GeneralApp")),
+  lazy(() => import("../pages/dashboard/GeneralApp"))
 );
+const Settings = Loadable(lazy(() => import("../pages/dashboard/Settings")));
+
 const Page404 = Loadable(lazy(() => import("../pages/Page404")));
