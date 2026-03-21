@@ -4,6 +4,8 @@ const dotenv = require('dotenv');
 const helmet = require('helmet');
 const cors = require('cors');
 const morgan = require('morgan');
+const authRoutes = require('./routes/auth');
+
 
 // Load environment variables
 dotenv.config();
@@ -23,6 +25,10 @@ app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'OK', message: 'Server is running' });
 });
+
+// Auth Routes
+app.use('/api/auth', authRoutes);
+
 
 // MongoDB Connection
 mongoose.connect(MONGODB_URI)
