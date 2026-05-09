@@ -46,87 +46,42 @@ export default function CreateChatRoomForm({ token, onCreated }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} style={formStyle}>
-      <div style={formTitleStyle}>New room</div>
-      <input
-        type="text"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        placeholder="Room name"
-        style={inputStyle}
-        disabled={busy}
-      />
-      <input
-        type="text"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-        placeholder="Description (optional)"
-        style={inputStyle}
-        disabled={busy}
-      />
-      <label style={checkboxRowStyle}>
+    <form className="create-room" onSubmit={handleSubmit} aria-labelledby="create-room-heading">
+      <div id="create-room-heading" className="create-room__title">
+        New room
+      </div>
+      <div className="create-room__inputs">
         <input
-          type="checkbox"
-          checked={isPrivate}
-          onChange={(e) => setIsPrivate(e.target.checked)}
+          type="text"
+          className="create-room__input"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Room name"
+          disabled={busy}
+          required
+        />
+        <input
+          type="text"
+          className="create-room__input"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          placeholder="Description (optional)"
           disabled={busy}
         />
-        <span>Private room</span>
-      </label>
-      {error ? <div style={errorStyle}>{error}</div> : null}
-      <button type="submit" style={submitStyle} disabled={busy}>
-        {busy ? 'Creating…' : 'Create'}
+        <label className="create-room__row">
+          <input
+            type="checkbox"
+            checked={isPrivate}
+            onChange={(e) => setIsPrivate(e.target.checked)}
+            disabled={busy}
+          />
+          <span>Private (invite-only)</span>
+        </label>
+      </div>
+      {error ? <div className="create-room__error">{error}</div> : null}
+      <button type="submit" className="create-room__submit" disabled={busy}>
+        {busy ? 'Creating…' : 'Create room'}
       </button>
     </form>
   );
 }
-
-const formStyle = {
-  padding: '1rem',
-  borderBottom: '1px solid var(--border-color)',
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '0.5rem'
-};
-
-const formTitleStyle = {
-  fontSize: '0.75rem',
-  fontWeight: '600',
-  textTransform: 'uppercase',
-  letterSpacing: '0.04em',
-  color: 'var(--text-muted)'
-};
-
-const inputStyle = {
-  width: '100%',
-  padding: '0.5rem 0.75rem',
-  fontSize: '0.875rem',
-  borderRadius: '8px',
-  border: '1px solid var(--border-color)',
-  background: 'var(--bg-primary)',
-  color: 'var(--text-primary)'
-};
-
-const checkboxRowStyle = {
-  display: 'flex',
-  alignItems: 'center',
-  gap: '0.5rem',
-  fontSize: '0.8rem',
-  color: 'var(--text-secondary)'
-};
-
-const errorStyle = {
-  fontSize: '0.8rem',
-  color: '#f87171'
-};
-
-const submitStyle = {
-  marginTop: '0.25rem',
-  padding: '0.5rem 1rem',
-  borderRadius: '8px',
-  background: 'var(--accent-primary)',
-  color: 'white',
-  fontWeight: '600',
-  fontSize: '0.85rem',
-  alignSelf: 'flex-start'
-};

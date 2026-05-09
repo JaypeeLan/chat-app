@@ -10,7 +10,12 @@ const ProtectedRoute = ({ children }) => {
 
   if (!token) return <Navigate to="/login" replace />;
   if (loading || !user) {
-    return <div className="loading">Loading…</div>;
+    return (
+      <div className="app-loading" role="status" aria-live="polite">
+        <span className="app-loading__spinner" aria-hidden />
+        Loading…
+      </div>
+    );
   }
 
   return children;
