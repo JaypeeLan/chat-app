@@ -149,12 +149,28 @@ app.get('/health', (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/rooms', chatRoomRoutes);
 
-// Serve static assets if in production
+// Serve static assets if in production (Express 5: do not use app.get('*', …) — path-to-regexp rejects '*')
 if (process.env.NODE_ENV === 'production') {
+  const distIndex = path.resolve(__dirname, 'client', 'dist', 'index.html');
   app.use(express.static('client/dist'));
 
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'client', 'dist', 'index.html'));
+  app.use((req, res, next) => {
+    if (req.path.startsWith('/api') || req.path.startsWith('/socket.io')) {
+      return next();
+    }
+    if (req.method !== 'GET' && req.method !== 'HEAD') {
+      return next();
+    }
+    res.sendFile(distIndex);
+  });
+
+  app.use((req, res) => {
+    if (res.headersSent) return;
+    if (req.path.startsWith('/api')) {
+      res.status(404).json({ success: false, message: 'Not found' });
+      return;
+    }
+    res.status(404).type('text').send('Not found');
   });
 }
 
